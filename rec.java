@@ -1,27 +1,86 @@
-class rec{
-    public static void fib(int n,String src,String help,String dest){
-        // time complexity 2^n
-          if(n == 1){
-            System.out.println(n+"disk from "+src +"to"+dest);
-            return;
-          }
-           fib(n-1,src,dest,help);
-          System.out.println(n+"disk from    "+src +"  to   "+dest);
-          fib(n-1,help,src,dest);
+import java.util.*;
 
+public class rec {
 
-        // // time complexity o(n)
-        //   if(n <=0){
-        //     return;
-        // }
-        // int c = a+b;
-        // System.out.println(c);
-      
-        // fib(b,c,n-1);
+    public static void SaveSol(char[][] board, List<List<String>> solboards) {
+
+        List<String> solution = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            String row = "";
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == 'q')
+                    row += 'q';
+                else
+                    row += '.';
+            }
+            System.out.println(row);
+            solution.add(row);
+        }
+        solboards.add(solution);
 
     }
+
+    public static void PlacerFunction(char[][] board, List<List<String>> solboards, int col) {
+        if (col == board.length) {
+            SaveSol(board, solboards);
+            return;
+        }
+
+        for (int row = 0; row < board.length; row++) {
+            if (isSafe(board, row, col)) {
+                board[row][col] = 'q';
+                PlacerFunction(board, solboards, col + 1);
+                board[row][col] = '.';
+            }
+        }
+    }
+
+    public static Boolean isSafe(char[][] board, int row, int col) {
+
+        for (int i = 0; i < board.length; i++) {
+            if (board[row][i] == 'q')
+                return false;
+            if (board[i][col] == 'q')
+                return false;
+        }
+
+        // upper left
+        for (int r = row, c = col; r >= 0 && c >= 0; r--, c--) {
+            if (board[r][c] == 'q')
+                return false;
+        }
+
+        // upper right
+        for (int r = row, c = col; r >= 0 && c < board.length; r--, c++) {   // CHANGED
+            if (board[r][c] == 'q')
+                return false;
+        }
+
+        // lower left
+        for (int r = row, c = col; r < board.length && c >= 0; r++, c--) {   // CHANGED
+            if (board[r][c] == 'q')
+                return false;
+        }
+
+        // lower right
+        for (int r = row, c = col; r < board.length && c < board.length; r++, c++) {   // CHANGED
+            if (board[r][c] == 'q')
+                return false;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
-        System.out.println("0,1");
-        fib(3,"s","h","d");
+
+        List<List<String>> solboards = new ArrayList<>();
+        int n = 5;
+        char[][] board = new char[n][n];
+
+       
+
+        PlacerFunction(board, solboards, 0);
+        // System.out.println(solboards);
     }
 }
+// time complexity n^n
