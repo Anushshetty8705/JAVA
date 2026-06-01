@@ -1,5 +1,6 @@
-public class rec {
-    public static void QuicSort(int[] arr,int low,int high){
+# 1 QUICK SORT
+```java
+public static void QuicSort(int[] arr,int low,int high){
    if(low < high){
     int i =partion(arr,low,high);
     QuicSort(arr,low,i-1);
@@ -28,4 +29,4 @@ QuicSort(arr,0,arr.length-1);
 for(int i=0;i<arr.length;i++)
     System.out.print(arr[i]+ " ");
     }
-}
+```
