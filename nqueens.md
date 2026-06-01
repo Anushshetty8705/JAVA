@@ -73,4 +73,4 @@ public static Boolean isSafe(char[][] board, int row, int col) {
 }
 ```
 ### Time complexity 
-n^n  as n queens has n ways to pick
+```text n^n  as n queens has n ways to pick```
